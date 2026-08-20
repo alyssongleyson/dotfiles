@@ -12,8 +12,24 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- Initialize lazy.nvim with an empty plugin list
-require("lazy").setup({})
+require("lazy").setup({
+  -- Treesitter parser for Abstract Syntax Tree (AST) analysis
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    opts = {
+      ensure_installed = { "markdown", "markdown_inline" },
+      highlight = { enable = true },
+    },
+  },
+
+  -- Visual renderer for Markdown blocks and elements in the buffer
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.icons" },
+    opts = {},
+  },
+})
 
 -- General editor options
 vim.opt.number = true         -- Displays line numbers on the left gutter
