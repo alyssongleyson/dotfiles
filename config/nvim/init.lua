@@ -12,6 +12,12 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+-- General editor options
+vim.opt.number = true         -- Displays line numbers on the left gutter
+vim.opt.termguicolors = true  -- Enables 24-bit RGB color support in the TUI
+vim.opt.conceallevel = 2      -- Hides markup elements (e.g., Markdown) for a clean UI
+
+-- Plugins configuration
 require("lazy").setup({
   -- Treesitter parser for Abstract Syntax Tree (AST) analysis
   {
@@ -29,9 +35,11 @@ require("lazy").setup({
     dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.icons" },
     opts = {},
   },
-})
 
--- General editor options
-vim.opt.number = true         -- Displays line numbers on the left gutter
-vim.opt.termguicolors = true  -- Enables 24-bit RGB color support in the TUI
-vim.opt.conceallevel = 2      -- Hides markup elements (e.g., Markdown) for a clean UI
+  -- Telescope fuzzy finder
+  {
+    "nvim-telescope/telescope.nvim",
+    tag = "0.1.8",
+    dependencies = { "nvim-lua/plenary.nvim" },
+  },
+})
