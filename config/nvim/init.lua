@@ -66,3 +66,11 @@ require("lazy").setup({
     },
   },
 })
+
+-- Keymaps
+local keymap = vim.keymap.set
+keymap("n", "<leader>on", ":ObsidianNew ", { desc = "Nova Nota" })
+keymap("n", "<leader>os", ":ObsidianSearch ", { desc = "Buscar texto nas notas" })
+keymap("n", "<leader>oo", ":ObsidianOpen", { desc = "Abrir no Obsidian" })
+keymap("n", "<leader>od", ":ObsidianToday", { desc = "Nota diaria de hoje" })
+keymap("n", "<leader>ot", ":ObsidianTemplate", { desc = "Inserir Template" })
