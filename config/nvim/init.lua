@@ -12,65 +12,9 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
--- General editor options
-vim.opt.number = true         -- Displays line numbers on the left gutter
-vim.opt.termguicolors = true  -- Enables 24-bit RGB color support in the TUI
-vim.opt.conceallevel = 2      -- Hides markup elements (e.g., Markdown) for a clean UI
+-- Load core editor settings and keymaps
+require("config.options")
+require("config.keymaps")
 
--- Plugins configuration
-require("lazy").setup({
-  -- Treesitter parser for Abstract Syntax Tree (AST) analysis
-  {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    opts = {
-      ensure_installed = { "markdown", "markdown_inline" },
-      highlight = { enable = true },
-    },
-  },
-
-  -- Visual renderer for Markdown blocks and elements in the buffer
-  {
-    "MeanderingProgrammer/render-markdown.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.icons" },
-    opts = {},
-  },
-
-  -- Telescope fuzzy finder
-  {
-    "nvim-telescope/telescope.nvim",
-    tag = "0.1.8",
-    dependencies = { "nvim-lua/plenary.nvim" },
-  },
-
-  -- Obsidian integration for note-taking
-  {
-    "epwalsh/obsidian.nvim",
-    version = "*",
-    lazy = true,
-    ft = "markdown",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    opts = {
-      workspaces = {
-        {
-          name = "nvim.notes",
-          path = "~/mdnotes",
-        },
-      },
-      daily_notes = {
-        folder = "log",
-        date_format = "%Y-%m-%d",
-      },
-    },
-  },
-})
-
--- Keymaps
-local keymap = vim.keymap.set
-keymap("n", "<leader>on", ":ObsidianNew ", { desc = "Nova Nota" })
-keymap("n", "<leader>os", ":ObsidianSearch ", { desc = "Buscar texto nas notas" })
-keymap("n", "<leader>oo", ":ObsidianOpen", { desc = "Abrir no Obsidian" })
-keymap("n", "<leader>od", ":ObsidianToday", { desc = "Nota diaria de hoje" })
-keymap("n", "<leader>ot", ":ObsidianTemplate", { desc = "Inserir Template" })
+-- Load plugins from lua/plugins/ directory
+require("lazy").setup("plugins")
